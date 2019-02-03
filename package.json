@@ -4,7 +4,7 @@
   "description": "upload images of items to receive places to buy similar items",
   "main": "app.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "gcloud iam service-accounts keys create keyfile.json --iam-account michael@relativepi.iam.gserviceaccount.com && export GOOGLE_APPLICATION_CREDENTIALS=keyfile.json && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
