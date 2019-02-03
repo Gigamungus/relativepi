@@ -112,8 +112,9 @@ function sendImageToBackend(image) {
     headers: { "content-type": "application/json" },
     body: JSON.stringify(body)
   })
+    .then(res => res.json())
     .then(res => {
       console.log(res);
-      changeStatus("uploaded images successfully");
+      changeStatus(`you uploaded a picture of a ${res.make} ${res.model}`);
     });
 }

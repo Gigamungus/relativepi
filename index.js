@@ -1,3 +1,5 @@
+process.env.GOOGLE_APPLICATION_CREDENTIALS = "secret/relativepi-83585e3b0189.json";
+
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -5,9 +7,8 @@ var bodyParser = require("body-parser");
 
 const getDataFromImage = require("./apiRoutes/getDataFromImage");
 
-
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({limit: "10mb"}));
+app.use(bodyParser.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -24,7 +25,7 @@ app.get("/app.js", function(req, res) {
 });
 
 app.post("/api/parseimage", (req, res) => {
-    getDataFromImage(req, res);
+  getDataFromImage(req, res);
 });
 
 app.listen(5000, () => {
