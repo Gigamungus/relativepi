@@ -1,5 +1,5 @@
 const APIPrefix =
-  window.location.host === "localhost:3000"
+  window.location.host === "localhost:5000"
     ? "http://localhost:5000"
     : "https://" + window.location.host;
 

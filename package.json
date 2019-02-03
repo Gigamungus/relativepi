@@ -17,9 +17,12 @@
   },
   "homepage": "https://github.com/Gigamungus/relativepi#readme",
   "dependencies": {
+    "@google-cloud/vision": "^0.24.0",
     "base64-img": "^1.0.4",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "file-system": "^2.2.2",
+    "fs-extra": "^7.0.1",
     "nodemon": "^1.18.9",
     "path": "^0.12.7",
     "request": "^2.88.0"

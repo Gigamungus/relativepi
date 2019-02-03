@@ -3,7 +3,6 @@ const app = express();
 const path = require("path");
 var bodyParser = require("body-parser");
 
-
 const getDataFromImage = require("./apiRoutes/getDataFromImage");
 
 
