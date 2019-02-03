@@ -1,0 +1,2 @@
+google-cloud-vision==0.35.0
+gunicorn==19.9.0
