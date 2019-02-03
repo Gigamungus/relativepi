@@ -44,7 +44,7 @@ function addFiles(event) {
 function showFiles(files) {
   if (files.length > 1) {
     fileLabelText().innerText = files.length + " files selected";
-  } else if(files.length > 0) {
+  } else if (files.length > 0) {
     fileLabelText().innerText = files[0].name;
   }
 }
@@ -53,8 +53,6 @@ function uploadFiles(event) {
   event.preventDefault();
   changeStatus("Uploading...");
 
-
-
   startRead(event);
 }
 
@@ -62,51 +60,44 @@ function changeStatus(text) {
   uploadStatus().innerText = text;
 }
 
-
-
-
-
-
 function startRead(evt) {
-    var file = document.getElementById('fileInput').files[0];
-    if (file) {
-        if (file.type.match("image.*")) {
-            getAsImage(file);
-        }
-        else {
-            getAsText(file);
-        }
+  var file = document.getElementById("fileInput").files[0];
+  if (file) {
+    if (file.type.match("image.*")) {
+      getAsImage(file);
+    } else {
+      getAsText(file);
     }
-    evt.stopPropagation();
-    evt.preventDefault();
+  }
+  evt.stopPropagation();
+  evt.preventDefault();
 }
 function startReadFromDrag(evt) {
-    var file = evt.dataTransfer.files[0];
-    if (file) {
-        if (file.type.match("image.*")) {
-            getAsImage(file);
-        }
-        else {
-            getAsText(file);
-        }
+  var file = evt.dataTransfer.files[0];
+  if (file) {
+    if (file.type.match("image.*")) {
+      getAsImage(file);
+    } else {
+      getAsText(file);
     }
-    evt.stopPropagation();
-    evt.preventDefault();
+  }
+  evt.stopPropagation();
+  evt.preventDefault();
 }
 function getAsImage(readFile) {
-    var reader = new FileReader();
-    reader.readAsDataURL(readFile);
-    reader.onload = sendImageToBackend;
+  var reader = new FileReader();
+  reader.readAsDataURL(readFile);
+  reader.onload = sendImageToBackend;
 }
 function addImg(imgsrc) {
-    var img = document.createElement('img');
-    img.setAttribute("src", imgsrc.target.result);
-    document.getElementById("op").insertBefore(img);
+  var img = document.createElement("img");
+  img.setAttribute("src", imgsrc.target.result);
+  document.getElementById("op").insertBefore(img);
 }
 
 function sendImageToBackend(image) {
   let body = { image: image.target.result };
-  
+
   fetch(`${APIPrefix}/api/parseimage`, {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -115,6 +106,21 @@ function sendImageToBackend(image) {
     .then(res => res.json())
     .then(res => {
       console.log(res);
-      changeStatus(`you uploaded a picture of a ${res.make} ${res.model}`);
+      if (res.make && res.model) {
+        if (res.model.indexOf(res.make) !== -1) {
+          let theRealDeal = res.model.split(" ");
+          changeStatus(
+            `you uploaded a picture of a ${theRealDeal[0]} ${theRealDeal[1]}`
+          );
+        } else {
+          changeStatus(`you uploaded a picture of a ${res.make} ${res.model}`);
+        }
+      } else if (res.make) {
+        changeStatus(`you uploaded a picture of a ${res.make}`);
+      } else {
+        changeStatus(
+          "I don't know what you uploaded, make sure to upload a clear picture of a vehicle"
+        );
+      }
     });
 }

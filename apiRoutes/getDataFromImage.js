@@ -78,7 +78,9 @@ const getDataFromImage = (req, res) => {
 
           parseCarInfo(
             results[0].labelAnnotations.reduce((acc, item) => {
-              acc.push(item.description.toLowerCase());
+              if (item.description) {
+                acc.push(item.description.toLowerCase());
+              }
               return acc;
             }, []),
             res
@@ -95,17 +97,26 @@ const getDataFromImage = (req, res) => {
       });
     }
   });
-
 };
 
 const parseCarInfo = (results, res) => {
   let make;
 
+
   for (let detail of results) {
-    if (makes[detail]) {
-      make = detail;
-    }
+      for (let makeItem of Object.keys(makes)) {
+          if (detail.indexOf(makeItem) !== -1) {
+              make = detail;
+              break;
+          }
+      }
   }
+
+//   for (let detail of results) {
+//     if (makes[detail]) {
+//       make = detail;
+//     }
+//   }
 
   if (make) {
     const body = http
@@ -115,25 +126,31 @@ const parseCarInfo = (results, res) => {
       .then(response => {
         let responseResults = response.body.Results;
         let model;
-        
+
         for (let result of responseResults) {
           for (let mod of results) {
-            if (mod === "honda fit") {
-            }
-            if (mod.indexOf(result.Model_Name.toLowerCase()) !== -1) {
+            if (
+              result.Model_Name &&
+              mod.indexOf(result.Model_Name.toLowerCase()) !== -1
+            ) {
               model = mod;
             }
           }
         }
         if (model) {
-            let response = {
-                "make": make,
-                "model": model
-            }
-            res.json(response);
-            console.log("done");
+          let response = {
+            make: make,
+            model: model
+          };
+          res.json(response);
+        } else {
+          console.log(results);
+          res.json({ make });
         }
       });
+  } else {
+    console.log(results);
+    res.json({ error: "image not understood" });
   }
 };
 
