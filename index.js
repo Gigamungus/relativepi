@@ -1,4 +1,3 @@
-process.env.GOOGLE_APPLICATION_CREDENTIALS = "secret/relativepi-83585e3b0189.json";
 
 const express = require("express");
 const app = express();
