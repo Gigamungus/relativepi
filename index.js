@@ -26,7 +26,7 @@ app.get("/app.js", function(req, res) {
 app.post("/api/parseimage", (req, res) => {
   getDataFromImage(req, res);
 });
-
-app.listen(5000, () => {
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
   console.log("serving app on port 5000");
 });
