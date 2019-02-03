@@ -25,11 +25,12 @@ const getDataFromImage = (req, res) => {
             console.log(err);
         } else {
 
-
+            console.log("started working");
             // Performs label detection on the image file
             client
                 .labelDetection(filepath)
                 .then(results => {
+                    console.log("got results");
                     const labels = results[0].labelAnnotations;
 
                     console.log("Labels:");
@@ -42,6 +43,7 @@ const getDataFromImage = (req, res) => {
 
 
             fs.remove(filepath, err => {
+                console.log("removed file");
                 if (err) {
                     console.log(err);
                 }
