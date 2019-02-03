@@ -24,7 +24,6 @@ app.get("/app.js", function(req, res) {
 });
 
 app.post("/api/parseimage", (req, res) => {
-  console.log("doing something");
     getDataFromImage(req, res);
 });
 
