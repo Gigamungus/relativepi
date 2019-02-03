@@ -1,7 +1,7 @@
 const APIPrefix =
   window.location.host === "localhost:3000"
     ? "http://localhost:5000"
-    : "http://" + window.location.host;
+    : "https://" + window.location.host;
 
 (() => {
   if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
